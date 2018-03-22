@@ -32,6 +32,4 @@ window.addEventListener("scroll", event => {
   time_display.classList.toggle("time-display-float", scrollTop > scrollLimit);
   multicam_btn.classList.toggle("multicam-float", scrollTop > scrollLimit);
   size_btn.classList.toggle("size-float", scrollTop > scrollLimit);
-
-  console.log(player);
 });
