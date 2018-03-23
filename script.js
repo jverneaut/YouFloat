@@ -1,9 +1,12 @@
 let scrollTop = 0;
-const scrollLimit = 0;
+let scrollLimit = 0;
 
 window.addEventListener("scroll", event => {
   let video = document.getElementsByTagName("video")[0];
   let container = document.querySelector("#player-container");
+  let player = document.querySelector("#top > #player");
+  let top_div = document.querySelector("#top");
+  let topStyle = window.getComputedStyle(top_div);
 
   let chrome_bottom = document.getElementsByClassName("ytp-chrome-bottom")[0];
   let chrome_controls = document.getElementsByClassName(
@@ -19,6 +22,8 @@ window.addEventListener("scroll", event => {
   let size_btn = document.getElementsByClassName(
     "ytp-size-button ytp-button"
   )[0];
+
+  scrollLimit = player.clientHeight + parseInt(topStyle.marginTop);
 
   scrollTop = event.srcElement.scrollingElement.scrollTop;
   video.classList.toggle("video-float", scrollTop > scrollLimit);
