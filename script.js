@@ -8,6 +8,7 @@ window.addEventListener("scroll", event => {
     let player = document.querySelector("#top > #player");
     let top_div = document.querySelector("#top");
     let topStyle = window.getComputedStyle(top_div);
+    let autoplay_btn = document.getElementsByTagName("paper-toggle-button")[0];
 
     let chrome_bottom = document.getElementsByClassName("ytp-chrome-bottom")[0];
     let chrome_controls = document.getElementsByClassName(
@@ -25,6 +26,16 @@ window.addEventListener("scroll", event => {
     )[0];
 
     scrollLimit = player.clientHeight + parseInt(topStyle.marginTop);
+
+    if (scrollTop > scrollLimit) {
+      if (autoplay_btn.attributes.active !== undefined) {
+        autoplay_btn.click();
+      }
+    } else {
+      if (autoplay_btn.attributes.active === undefined) {
+        autoplay_btn.click();
+      }
+    }
 
     scrollTop = event.srcElement.scrollingElement.scrollTop;
     video.classList.toggle("video-float", scrollTop > scrollLimit);
