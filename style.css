@@ -1,13 +1,14 @@
 .video-float {
-  width: 320px !important;
-  height: 180px !important;
+  width: 427px !important;
+  height: 240px !important;
   top: 0px !important;
   left: 0px !important;
 }
 
 .container-float {
-  width: 320px !important;
-  height: 180px !important;
+  width: 427px !important;
+  min-height: unset !important;
+  height: 240px !important;
   position: fixed !important;
   right: 40px !important;
   bottom: 40px !important;
@@ -17,25 +18,5 @@
 }
 
 .chrome-bottom-float {
-  width: 296px !important;
-}
-
-.progress-bar-float {
-  width: 296px !important;
-}
-
-.chrome-controls-float {
-  width: 296px !important;
-}
-
-.time-display-float {
-  display: none !important;
-}
-
-.multicam-float {
-  display: none !important;
-}
-
-.size-float {
-  display: none !important;
+  width: 403px !important;
 }

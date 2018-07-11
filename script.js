@@ -1,59 +1,67 @@
-let scrollTop = 0;
-let scrollLimit = 0;
+let playerOriginalHeight = 0;
+let autoplay = true;
 
 window.addEventListener("scroll", event => {
   if (window.location.href.indexOf("watch") !== -1) {
-    let video = document.getElementsByTagName("video")[0];
-    let container = document.querySelector("#player-container");
-    let player = document.querySelector("#top > #player");
-    let top_div = document.querySelector("#top");
-    let topStyle = window.getComputedStyle(top_div);
-    let autoplay_btn = document.getElementsByTagName("paper-toggle-button")[0];
+    const player = document.querySelector('#player.style-scope');
+    if (player.clientWidth === 0) {
+      player = document.querySelector('#player-theater-container');
+    }
 
-    let chrome_bottom = document.getElementsByClassName("ytp-chrome-bottom")[0];
-    let chrome_controls = document.getElementsByClassName(
-      "ytp-chrome-controls"
-    )[0];
-    let progress_bar = document.getElementsByClassName(
-      "ytp-progress-bar-container"
-    )[0];
-    let time_display = document.getElementsByClassName("ytp-time-display")[0];
-    let multicam_btn = document.getElementsByClassName(
-      "ytp-multicam-button ytp-button"
-    )[0];
-    let size_btn = document.getElementsByClassName(
-      "ytp-size-button ytp-button"
-    )[0];
+    const playerBoundingClientRect = player.getBoundingClientRect();
 
-    scrollLimit = player.clientHeight + parseInt(topStyle.marginTop);
+    const autoplayBtn = document.getElementsByTagName("paper-toggle-button")[0];
 
-    if (scrollTop > scrollLimit) {
-      if (autoplay_btn.attributes.active !== undefined) {
-        autoplay_btn.click();
-      }
-    } else {
-      if (autoplay_btn.attributes.active === undefined) {
-        autoplay_btn.click();
+    let scrollTop = event.srcElement.scrollingElement.scrollTop
+    if (scrollTop < 40) {
+      playerOriginalHeight = playerBoundingClientRect.bottom - playerBoundingClientRect.top;
+      if (autoplayBtn.getAttribute('aria-pressed') === 'true') {
+        autoplay = true;
+      } else {
+        autoplay = false;
       }
     }
 
-    scrollTop = event.srcElement.scrollingElement.scrollTop;
-    video.classList.toggle("video-float", scrollTop > scrollLimit);
-    container.classList.toggle("container-float", scrollTop > scrollLimit);
-    chrome_bottom.classList.toggle("chrome-btn-float", scrollTop > scrollLimit);
-    chrome_controls.classList.toggle(
-      "chrome-controls-float",
-      scrollTop > scrollLimit
-    );
-    progress_bar.classList.toggle(
-      "progress-bar-float",
-      scrollTop > scrollLimit
-    );
-    time_display.classList.toggle(
-      "time-display-float",
-      scrollTop > scrollLimit
-    );
-    multicam_btn.classList.toggle("multicam-float", scrollTop > scrollLimit);
-    size_btn.classList.toggle("size-float", scrollTop > scrollLimit);
+    const content = document.querySelector('#columns > #primary');
+
+    let isSmallPlayer = false;
+    if (scrollTop > playerOriginalHeight) {
+      isSmallPlayer = true;
+      content.style.marginTop = `${playerOriginalHeight}px`;
+      if (autoplay === true) {
+        if (autoplayBtn.getAttribute('aria-pressed') === 'true') {
+          autoplayBtn.click();
+        }
+      }
+    } else {
+      isSmallPlayer = false;
+      content.style.marginTop = 0;
+      if (autoplay === true) {
+        if (autoplayBtn.getAttribute('aria-pressed') === 'false') {
+          autoplayBtn.click();
+        }
+      }
+    }
+
+
+
+    const html5Player = document.getElementsByClassName('html5-main-video')[0];
+    html5Player.classList.toggle("video-float", isSmallPlayer);
+
+    const playerContainer = document.querySelector("#player-container-outer");
+    if (playerContainer) {
+      playerContainer.classList.toggle("container-float", isSmallPlayer);
+    }
+
+    const theaterPlayerContainer = document.querySelector("#player-theater-container");
+    if (theaterPlayerContainer) {
+      theaterPlayerContainer.classList.toggle("container-float", isSmallPlayer);
+    }
+
+    const moviePlayer = document.querySelector('#movie_player')
+    moviePlayer.classList.toggle('ytp-small-mode', isSmallPlayer);
+
+    const chrome_bottom = document.getElementsByClassName("ytp-chrome-bottom")[0];
+    chrome_bottom.classList.toggle("chrome-bottom-float", isSmallPlayer);
   }
 });
