@@ -1,14 +1,19 @@
 {
-  "name": "Small Youtube Player",
+  "name": "YouFloat",
   "version": "1.0",
-  "description":
-    "Extension to get a small youtube player on scroll like on mobile",
+  "description": "Extension to get a small youtube player on scroll like on mobile",
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["script.js"],
-      "css": ["style.css"]
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "script.js"
+      ],
+      "css": [
+        "style.css"
+      ]
     }
   ],
   "manifest_version": 2
