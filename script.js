@@ -3,7 +3,7 @@ let autoplay = undefined;
 
 window.addEventListener('scroll', event => {
   if (window.location.href.indexOf('watch') !== -1) {
-    const player = document.querySelector('#player.style-scope');
+    let player = document.querySelector('#player.style-scope');
     if (player.clientWidth === 0) {
       player = document.querySelector('#player-theater-container');
     }
