@@ -1,5 +1,5 @@
 let playerOriginalHeight = 0;
-let autoplay = true;
+let autoplay = undefined;
 
 window.addEventListener('scroll', event => {
   if (window.location.href.indexOf('watch') !== -1) {
@@ -10,24 +10,25 @@ window.addEventListener('scroll', event => {
 
     const playerBoundingClientRect = player.getBoundingClientRect();
 
-    const autoplayBtn = document.getElementsByTagName('paper-toggle-button')[0];
-
     let scrollTop = event.srcElement.scrollingElement.scrollTop
     if (scrollTop < 40) {
       playerOriginalHeight = playerBoundingClientRect.bottom - playerBoundingClientRect.top;
-      if (autoplayBtn.getAttribute('aria-pressed') === 'true') {
-        autoplay = true;
-      } else {
-        autoplay = false;
-      }
     }
 
+    const autoplayBtn = document.getElementsByTagName('paper-toggle-button')[0];
     const content = document.querySelector('#columns > #primary');
 
     let isSmallPlayer = false;
     if (scrollTop > playerOriginalHeight) {
       isSmallPlayer = true;
       content.style.marginTop = `${playerOriginalHeight}px`;
+      if (autoplay === undefined) {
+        if (autoplayBtn.getAttribute('aria-pressed') === 'true') {
+          autoplay = true;
+        } else {
+          autoplay = false;
+        }
+      }
       if (autoplay === true) {
         if (autoplayBtn.getAttribute('aria-pressed') === 'true') {
           autoplayBtn.click();
