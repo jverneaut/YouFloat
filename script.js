@@ -11,7 +11,7 @@ window.addEventListener('scroll', event => {
     const playerBoundingClientRect = player.getBoundingClientRect();
 
     let scrollTop = event.srcElement.scrollingElement.scrollTop
-    if (scrollTop < 40) {
+    if (scrollTop < 240) {
       playerOriginalHeight = playerBoundingClientRect.bottom - playerBoundingClientRect.top;
     }
 
